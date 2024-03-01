@@ -36,7 +36,7 @@ pipeline {
 
         stage('Del Old Data') {
           steps {
-            bat 'del /s /q D:\\New folder\\Perkfy\\'
+            bat 'del /s /q "D:\\New folder\\Perkfy"'
           }
         }
 

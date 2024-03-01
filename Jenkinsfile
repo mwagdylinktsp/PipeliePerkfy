@@ -5,7 +5,7 @@ pipeline {
       steps {
         git(url: 'git@github.com:mwagdylinktsp/perkfy.git', branch: 'main', credentialsId: 'Word-SSH')
         echo 'SCM Poll Done'
-        bat 'del /s /q D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Debug\\net8.0\\'
+        powershell 'Remove-Item D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Debug\\net8.0\\* -recurse'
       }
     }
 
@@ -19,13 +19,13 @@ pipeline {
     stage('Configuration to Release') {
       steps {
         bat 'iisreset /stop'
-        bat 'del /s /q "D:\\New folder\\Perkfy"'
+        powershell 'Remove-Item d:\\iis\\perkfy\\* -recurse'
       }
     }
 
     stage('Move and Run The New Build') {
       steps {
-        bat 'robocopy "D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Debug\\net8.0" "D:\\New folder\\Perkfy" /mir'
+        bat 'Copy-Item -Path D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Debug\\net8.0\\* -Destination D:\\iis\\Perkfy -Recurse'
         bat 'iisreset /start'
       }
     }

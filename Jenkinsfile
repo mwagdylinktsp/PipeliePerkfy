@@ -25,7 +25,7 @@ pipeline {
 
     stage('Move and Run The New Build') {
       steps {
-        bat 'Copy-Item -Path D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Debug\\net8.0\\* -Destination D:\\iis\\Perkfy -Recurse'
+        powershell 'Copy-Item -Path D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Debug\\net8.0\\* -Destination D:\\iis\\Perkfy -Recurse'
         bat 'iisreset /start'
       }
     }

@@ -2,20 +2,10 @@ pipeline {
   agent any
   stages {
     stage('SCM') {
-      parallel {
-        stage('SCM') {
-          steps {
-            git(url: 'git@github.com:mwagdylinktsp/perkfy.git', branch: 'main', credentialsId: 'Word-SSH')
-            echo 'SCM Poll Done'
-          }
-        }
-
-        stage('Del Old Build') {
-          steps {
-            bat 'del /s /q D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Debug\\net8.0\\'
-          }
-        }
-
+      steps {
+        git(url: 'git@github.com:mwagdylinktsp/perkfy.git', branch: 'main', credentialsId: 'Word-SSH')
+        echo 'SCM Poll Done'
+        bat 'del /s /q D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Debug\\net8.0\\'
       }
     }
 
@@ -33,20 +23,10 @@ pipeline {
       }
     }
 
-    stage('Deploy') {
-      parallel {
-        stage('Move The New Build to IIS') {
-          steps {
-            bat 'robocopy "D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Debug\\net8.0" "D:\\New folder\\Perkfy" /mir'
-          }
-        }
-
-        stage('Run IIS') {
-          steps {
-            bat 'iisreset /start'
-          }
-        }
-
+    stage('Move and Run The New Build') {
+      steps {
+        bat 'robocopy "D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Debug\\net8.0" "D:\\New folder\\Perkfy" /mir'
+        bat 'iisreset /start'
       }
     }
 

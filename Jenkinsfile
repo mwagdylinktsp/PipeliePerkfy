@@ -5,7 +5,7 @@ pipeline {
       steps {
         git(url: 'git@github.com:mwagdylinktsp/perkfy.git', branch: 'main', credentialsId: 'Word-SSH')
         echo 'SCM Poll Done'
-        powershell 'Remove-Item D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Debug\\net8.0\\* -recurse'
+        powershell 'Remove-Item D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Debug\\net8.0\\* -recurse -force'
       }
     }
 
@@ -19,13 +19,13 @@ pipeline {
     stage('Configuration to Release') {
       steps {
         bat 'iisreset /stop'
-        powershell 'Remove-Item d:\\iis\\perkfy\\* -recurse'
+        powershell 'Remove-Item d:\\iis\\perkfy\\* -recurse -force'
       }
     }
 
     stage('Move and Run The New Build') {
       steps {
-        powershell 'Copy-Item -Path D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Debug\\net8.0\\* -Destination D:\\iis\\Perkfy -Recurse'
+        powershell 'Copy-Item -Path D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Debug\\net8.0\\* -Destination D:\\iis\\Perkfy -Recurse -force'
         bat 'iisreset /start'
       }
     }

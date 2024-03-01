@@ -27,19 +27,9 @@ pipeline {
     }
 
     stage('Configuration to Release') {
-      parallel {
-        stage('Stop IIS') {
-          steps {
-            bat 'iisreset /stop'
-          }
-        }
-
-        stage('Del Old Data') {
-          steps {
-            bat 'del /s /q "D:\\New folder\\Perkfy"'
-          }
-        }
-
+      steps {
+        bat 'iisreset /stop'
+        bat 'del /s /q "D:\\New folder\\Perkfy"'
       }
     }
 

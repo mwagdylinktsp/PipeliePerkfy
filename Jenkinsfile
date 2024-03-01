@@ -10,7 +10,7 @@ pipeline {
 
     stage('Build') {
       steps {
-        bat 'dotnet build D:\\GitHub_Projects\\Perkfy\\Perkfy.sln'
+        bat 'dotnet build D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\Perkfy.Web.csproj'
         echo 'Build Done'
       }
     }

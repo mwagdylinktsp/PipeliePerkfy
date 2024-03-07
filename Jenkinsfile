@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('SCM') {
       steps {
-        git(url: 'git@github.com:360CXservices/Perkfy-Service.git', branch: 'main', credentialsId: 'Jenkins-LiveOpen')
+        git(url: 'git@github.com:360CXservices/Perkfy-Service.git', branch: 'main', credentialsId: 'Jenkins-LiveOpen', poll: true)
         echo 'SCM Poll Done'
         powershell 'Remove-Item C:\\JenkinsData\\jenkins_home\\workspace\\PipeliePerkfy_main\\Perkfy.Web\\bin\\Release\\net8.0* -recurse -force'
       }

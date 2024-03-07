@@ -15,6 +15,13 @@ pipeline {
         echo 'Build Done'
       }
     }
+    
+    stage('Release') {
+      steps {
+        bat 'dotnet release C:\\JenkinsData\\jenkins_home\\workspace\\PipeliePerkfy_main\\Perkfy.sln'
+        echo 'Release Done'
+      }
+    }
 
     stage('Configuration to Release') {
       steps {
@@ -25,7 +32,7 @@ pipeline {
 
     stage('Move and Run The New Build') {
       steps {
-        powershell 'Copy-Item -Path D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Debug\\net8.0\\* -Destination D:\\iis\\Perkfy -Recurse -force'
+        powershell 'Copy-Item -Path D:\\GitHub_Projects\\Perkfy\\Perkfy.Web\\bin\\Release\\net8.0\\* -Destination D:\\iis\\Perkfy -Recurse -force'
         bat 'iisreset /start'
       }
     }
